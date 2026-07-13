@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "nullshot": {
+      "type": "http",
+      "url": "https://mcp.nullshot.ai/mcp"
+    }
+  }
+}

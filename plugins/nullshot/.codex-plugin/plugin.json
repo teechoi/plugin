@@ -1,0 +1,41 @@
+{
+  "name": "nullshot",
+  "version": "0.1.0",
+  "description": "Plan and operate Nullshot Jams through the authenticated Nullshot MCP gateway.",
+  "author": {
+    "name": "Nullshot",
+    "email": "support@nullshot.ai",
+    "url": "https://nullshot.ai"
+  },
+  "homepage": "https://github.com/null-shot/plugin#readme",
+  "repository": "https://github.com/null-shot/plugin",
+  "license": "MIT",
+  "keywords": [
+    "nullshot",
+    "mcp",
+    "planning",
+    "specification",
+    "skills"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Nullshot",
+    "shortDescription": "Plan and remotely operate Nullshot Jams",
+    "longDescription": "Gather project context, create reviewed specifications and task DAGs, and operate Nullshot through its OAuth-protected MCP gateway.",
+    "developerName": "Nullshot",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://nullshot.ai",
+    "defaultPrompt": [
+      "Turn this idea into a live Nullshot specification.",
+      "Create a reviewed plan in my active Nullshot Jam.",
+      "Inspect my active Jam and recommend the next step."
+    ],
+    "brandColor": "#8B5CF6"
+  }
+}

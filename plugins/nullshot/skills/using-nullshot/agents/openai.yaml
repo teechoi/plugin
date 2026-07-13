@@ -1,0 +1,4 @@
+interface:
+  display_name: "Using Nullshot"
+  short_description: "Authenticate, select Jams, and route Nullshot work"
+  default_prompt: "Use $using-nullshot to authenticate, select my Jam, and choose the right Nullshot workflow."

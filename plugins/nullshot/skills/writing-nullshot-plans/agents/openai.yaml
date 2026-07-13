@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Nullshot Plans"
+  short_description: "Create revision-aware task DAGs in Nullshot"
+  default_prompt: "Use $writing-nullshot-plans to create and sync a complete task DAG for my active Jam."

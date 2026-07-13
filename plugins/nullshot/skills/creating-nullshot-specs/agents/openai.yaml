@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Nullshot Specs"
+  short_description: "Turn ideas into approved live specifications"
+  default_prompt: "Use $creating-nullshot-specs to turn this idea into an approved live Nullshot specification."

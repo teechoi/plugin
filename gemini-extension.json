@@ -1,0 +1,11 @@
+{
+  "name": "nullshot",
+  "description": "Nullshot planning skills and authenticated MCP tools.",
+  "version": "0.1.0",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "nullshot": {
+      "httpUrl": "https://mcp.nullshot.ai/mcp"
+    }
+  }
+}

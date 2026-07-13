@@ -1,0 +1,35 @@
+{
+  "name": "@nullshot/plugin",
+  "version": "0.1.0",
+  "description": "Nullshot MCP and planning skills for AI coding agents",
+  "type": "module",
+  "license": "MIT",
+  "repository": "https://github.com/null-shot/plugin",
+  "keywords": [
+    "pi-package",
+    "nullshot",
+    "mcp",
+    "codex-plugin",
+    "claude-plugin",
+    "skills",
+    "planning"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "validate": "node scripts/validate.mjs"
+  },
+  "pi": {
+    "extensions": [
+      "./.pi/extensions/nullshot.ts"
+    ],
+    "skills": [
+      "./plugins/nullshot/skills"
+    ]
+  },
+  "dependencies": {
+    "pi-mcp-adapter": "2.11.0"
+  },
+  "bundledDependencies": [
+    "pi-mcp-adapter"
+  ]
+}

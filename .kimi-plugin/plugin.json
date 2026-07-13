@@ -1,0 +1,31 @@
+{
+  "name": "nullshot",
+  "version": "0.1.0",
+  "description": "Nullshot planning skills and authenticated MCP tools.",
+  "author": {
+    "name": "Nullshot"
+  },
+  "license": "MIT",
+  "skills": "./plugins/nullshot/skills/",
+  "commands": "./plugins/nullshot/commands/",
+  "sessionStart": {
+    "skill": "using-nullshot"
+  },
+  "mcpServers": {
+    "nullshot": {
+      "type": "http",
+      "url": "https://mcp.nullshot.ai/mcp"
+    }
+  },
+  "interface": {
+    "displayName": "Nullshot",
+    "shortDescription": "Plan and remotely operate Nullshot Jams",
+    "longDescription": "Create live specifications and plans, then operate Nullshot through OAuth-protected MCP tools.",
+    "developerName": "Nullshot",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ]
+  }
+}

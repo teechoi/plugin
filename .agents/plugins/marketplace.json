@@ -1,0 +1,20 @@
+{
+  "name": "nullshot",
+  "interface": {
+    "displayName": "Nullshot"
+  },
+  "plugins": [
+    {
+      "name": "nullshot",
+      "source": {
+        "source": "local",
+        "path": "./plugins/nullshot"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "nullshot",
+  "displayName": "Nullshot",
+  "description": "Plan and operate Nullshot Jams through OAuth MCP tools.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Nullshot"
+  },
+  "license": "MIT",
+  "keywords": [
+    "nullshot",
+    "mcp",
+    "planning",
+    "skills"
+  ],
+  "skills": "./plugins/nullshot/skills/"
+}

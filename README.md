@@ -16,7 +16,7 @@ Paste the command for your client as one line. Clients with terminal OAuth suppo
 | OpenCode terminal | `curl -fsSL https://raw.githubusercontent.com/null-shot/plugin/main/scripts/install-opencode.sh \| sh` |
 | Pi terminal | `pi install git:github.com/null-shot/plugin@v0.1.0` |
 
-Cursor and Gemini discover OAuth automatically when the MCP server first returns `401 Unauthorized`. Kimi applies the plugin in a new session; if it reports that authorization is required, run `/mcp-config login nullshot`. Pi exposes the equivalent interactive action as `/mcp-auth nullshot`.
+Cursor and Gemini discover OAuth automatically when the MCP server first returns `401 Unauthorized`. Kimi applies the plugin in a new session; if it reports that authorization is required, run `/mcp-config login plugin-nullshot:nullshot`. Pi exposes the equivalent interactive action as `/mcp-auth nullshot`.
 
 ## Workflow
 

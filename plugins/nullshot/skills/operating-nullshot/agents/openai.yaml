@@ -1,4 +1,4 @@
 interface:
   display_name: "Operate Nullshot"
-  short_description: "Safely control Nullshot builds, merges, and publishing"
-  default_prompt: "Use $operating-nullshot to inspect and safely operate my active Nullshot Jam."
+  short_description: "Execute directly or delegate through Nullshot"
+  default_prompt: "Use $operating-nullshot to execute this Jam task directly or delegate it deliberately."

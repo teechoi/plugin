@@ -1,7 +1,7 @@
 {
   "name": "nullshot",
-  "version": "0.1.0",
-  "description": "Nullshot planning skills and authenticated MCP tools.",
+  "version": "0.2.0",
+  "description": "Cost-aware Nullshot planning, direct execution, and authenticated MCP tools.",
   "author": {
     "name": "Nullshot"
   },
@@ -19,8 +19,8 @@
   },
   "interface": {
     "displayName": "Nullshot",
-    "shortDescription": "Plan and remotely operate Nullshot Jams",
-    "longDescription": "Create live specifications and plans, then operate Nullshot through OAuth-protected MCP tools.",
+    "shortDescription": "Cost-aware Nullshot planning and execution",
+    "longDescription": "Create live specifications and plans, execute directly with the connected coding agent, or deliberately delegate through OAuth-protected Nullshot MCP tools.",
     "developerName": "Nullshot",
     "capabilities": [
       "Interactive",

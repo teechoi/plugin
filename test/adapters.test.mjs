@@ -36,6 +36,46 @@ test("README exposes one pasteable bootstrap command per client", () => {
   }
   assert.match(readme, /claude mcp login plugin:nullshot:nullshot/);
   assert.match(readme, /mcp-config login plugin-nullshot:nullshot/);
+  assert.match(readme, /“create a todo app” creates a prompt-free Jam/);
+  assert.match(readme, /Spek visualization stays current/);
+});
+
+test("skills prefer direct execution without removing hosted delegation", () => {
+  const readSkill = (name) => fs.readFileSync(path.resolve(`plugins/nullshot/skills/${name}/SKILL.md`), "utf8");
+  const using = readSkill("using-nullshot");
+  const specs = readSkill("creating-nullshot-specs");
+  const plans = readSkill("writing-nullshot-plans");
+  const operating = readSkill("operating-nullshot");
+
+  assert.match(using, /create_jam_room.*with no prompt/);
+  assert.match(using, /Direct execution — default for explicit build work/);
+  assert.match(using, /Hosted delegation/);
+  assert.match(using, /obtain explicit user acceptance before sending/);
+  assert.match(using, /Planning only.*do not authorize implementation/s);
+  assert.match(specs, /original request as authorization/);
+  assert.match(specs, /planning-only work, obtain explicit approval/);
+  assert.match(plans, /do not ask for a redundant second start message/);
+  assert.match(plans, /For planning-only requests, leave the room in planning and stop/);
+  assert.match(operating, /Direct — default/);
+  assert.match(operating, /Do not call `send_jam_prompt`/);
+  assert.match(operating, /plan task's `todoId` with `update_jam_todo`/);
+  assert.match(operating, /Spek visualization stays accurate/);
+  assert.match(operating, /Hosted — deliberate delegation/);
+  assert.match(operating, /never fall back silently/);
+  assert.match(operating, /avoidance of additional Nullshot-hosted agent usage/);
+  for (const operation of [
+    'apply_merge_resolution',
+    'apply_merge_user_choice',
+    'stage_merge_user_choice',
+    'clear_merge_user_choice',
+    'discard_merge_resolution',
+    'apply_selected_merge_features',
+    'abort_merge',
+    'undo_merge',
+    'perform_publish',
+  ]) {
+    assert.ok(operating.includes(`\`${operation}\``), `missing confirmation guard for ${operation}`);
+  }
 });
 
 test("Pi adapter preserves config and refuses a conflicting Nullshot URL", () => {

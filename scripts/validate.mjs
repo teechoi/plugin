@@ -37,6 +37,23 @@ assert.equal(codex.name, "nullshot");
 assert.equal(codex.version, pkg.version);
 assert.equal(codex.mcpServers, "./.mcp.json");
 
+for (const relative of [
+  ".cursor-plugin/plugin.json",
+  ".kimi-plugin/plugin.json",
+  "gemini-extension.json",
+  "kimi.plugin.json",
+  "plugins/nullshot/.claude-plugin/plugin.json",
+]) {
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, relative), "utf8"));
+  assert.equal(manifest.version, pkg.version, `${relative} version drifted from package.json`);
+}
+const claudeMarketplace = JSON.parse(fs.readFileSync(path.join(root, ".claude-plugin/marketplace.json"), "utf8"));
+assert.equal(
+  claudeMarketplace.plugins.find((plugin) => plugin.name === "nullshot")?.version,
+  pkg.version,
+  "Claude marketplace version drifted from package.json",
+);
+
 const canonicalMcp = fs.readFileSync(path.join(root, "plugins/nullshot/.mcp.json"), "utf8");
 assert.ok(canonicalMcp.includes(canonicalUrl));
 assert.equal(

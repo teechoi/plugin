@@ -1,8 +1,8 @@
 {
   "name": "nullshot",
   "displayName": "Nullshot",
-  "description": "Plan and operate Nullshot Jams through OAuth MCP tools.",
-  "version": "0.1.0",
+  "description": "Plan and execute Nullshot Jams directly or through deliberate hosted prompts.",
+  "version": "0.2.0",
   "author": {
     "name": "Nullshot"
   },

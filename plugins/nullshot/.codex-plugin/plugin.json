@@ -1,7 +1,7 @@
 {
   "name": "nullshot",
-  "version": "0.1.0",
-  "description": "Plan and operate Nullshot Jams through the authenticated Nullshot MCP gateway.",
+  "version": "0.2.0",
+  "description": "Plan and execute Nullshot Jams with cost-aware direct or hosted operation.",
   "author": {
     "name": "Nullshot",
     "email": "support@nullshot.ai",
@@ -21,8 +21,8 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Nullshot",
-    "shortDescription": "Plan and remotely operate Nullshot Jams",
-    "longDescription": "Gather project context, create reviewed specifications and task DAGs, and operate Nullshot through its OAuth-protected MCP gateway.",
+    "shortDescription": "Cost-aware Nullshot planning and execution",
+    "longDescription": "Gather context, create reviewed specifications and task DAGs, execute directly with the connected coding agent, or deliberately delegate through Nullshot's OAuth-protected MCP gateway.",
     "developerName": "Nullshot",
     "category": "Productivity",
     "capabilities": [
@@ -34,6 +34,7 @@
     "defaultPrompt": [
       "Turn this idea into a live Nullshot specification.",
       "Create a reviewed plan in my active Nullshot Jam.",
+      "Build this app directly in a new Nullshot Jam without starting a hosted prompt.",
       "Inspect my active Jam and recommend the next step."
     ],
     "brandColor": "#8B5CF6"

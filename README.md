@@ -14,7 +14,7 @@ Paste the command for your client as one line. Clients with terminal OAuth suppo
 | Kimi chat | `/plugins install https://github.com/null-shot/plugin` |
 | Gemini terminal | `gemini extensions install https://github.com/null-shot/plugin --consent` |
 | OpenCode terminal | `curl -fsSL https://raw.githubusercontent.com/null-shot/plugin/main/scripts/install-opencode.sh \| sh` |
-| Pi terminal | `pi install git:github.com/null-shot/plugin@v0.1.0` |
+| Pi terminal | `pi install git:github.com/null-shot/plugin@v0.2.0` |
 
 Cursor and Gemini discover OAuth automatically when the MCP server first returns `401 Unauthorized`. Kimi applies the plugin in a new session; if it reports that authorization is required, run `/mcp-config login plugin-nullshot:nullshot`. Pi exposes the equivalent interactive action as `/mcp-auth nullshot`.
 
@@ -24,7 +24,11 @@ Cursor and Gemini discover OAuth automatically when the MCP server first returns
 2. Use `using-nullshot` to load Jam context and relevant remote skills.
 3. Shape the product intent with `shaping-nullshot-context` and `creating-nullshot-specs`.
 4. Write the reviewed task DAG with `writing-nullshot-plans`; the goal and tasks are replaced atomically using revision checks.
-5. Use `operating-nullshot` only when the user explicitly asks to start a build, edit code, merge, or publish.
+5. Use `operating-nullshot` for explicit build work. The connected coding agent edits and commits the Jam app directly by default; `send_jam_prompt` is an optional hosted-delegation path.
+
+Creating a Jam never starts a hosted prompt. A clear request to build, implement, fix, or create an app or feature carries execution authorization through spec and plan, so the coding agent does not ask for a redundant second start message. Planning-only requests still stop before implementation. Direct execution avoids additional Nullshot-hosted agent usage but may use the coding client's own model subscription or API budget.
+
+For example, “create a todo app” creates a prompt-free Jam in planning, synchronizes the specification and task DAG, then has the connected coding agent edit and commit the Jam app. The agent marks each plan task in progress and complete through the MCP so the Spek visualization stays current. It calls `send_jam_prompt` only if hosted execution is deliberately selected.
 
 The plugin does not ship coding-method skills or a local Spek visualization server. Nullshot Jam is the source of truth for the live specification and plan.
 

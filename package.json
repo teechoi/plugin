@@ -1,7 +1,7 @@
 {
   "name": "@nullshot/plugin",
-  "version": "0.1.0",
-  "description": "Nullshot MCP and planning skills for AI coding agents",
+  "version": "0.2.0",
+  "description": "Cost-aware Nullshot planning and execution skills for AI coding agents",
   "type": "module",
   "license": "MIT",
   "repository": "https://github.com/null-shot/plugin",

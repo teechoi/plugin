@@ -13,6 +13,7 @@ Announce that you are using this skill. Produce a decision-complete plan that a 
 2. Require an approved spec-stage goal. If it is missing or materially ambiguous, return to `creating-nullshot-specs`.
 3. Inspect the relevant repository entrypoints, existing patterns, tests, configuration, and remote skills.
 4. Confirm product priority, slice order, and the observable done bar. Decide technical implementation from evidence.
+5. Preserve the selected executor in the plan strategy: connected coding agent by default for explicit build work, or Nullshot-hosted delegation only when deliberately chosen.
 
 ## Design the DAG
 
@@ -40,4 +41,4 @@ Dispatch the packaged plan reviewer with the specification, constraints, and ful
 4. On conflict, reconcile visibly and retry once. If any task has started or completed, stop; the plan can no longer be replaced as a draft.
 5. Report the new revision, stable task keys, and dependency order.
 
-Leave the room in planning. Execution requires a separate explicit request and `operating-nullshot`.
+For planning-only requests, leave the room in planning and stop. When the original request explicitly asked to build, implement, fix, or create an app or feature, continue with `operating-nullshot` after the atomic plan write; do not ask for a redundant second start message. Prefer direct execution by the connected coding agent.

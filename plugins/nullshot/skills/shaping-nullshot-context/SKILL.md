@@ -24,6 +24,7 @@ Produce these short groups with a source path or MCP result for every non-obviou
 - Architecture and data boundaries.
 - Security, authentication, and secret-handling rules.
 - Verification commands and observable acceptance expectations.
+- Execution owner and budget preference: direct coding agent, Nullshot-hosted delegation, or a bounded hybrid.
 - Known deployment, compatibility, or migration constraints.
 - Open product questions that cannot be answered from evidence.
 
@@ -31,4 +32,4 @@ Ask users only about product intent, priority, behavior, and acceptance. Resolve
 
 ## Persist
 
-Feed the normalized rules into `creating-nullshot-specs` as `constraints` and `discoveredContext`. If a live spec already exists, read its revision and update it only after explaining material changes to the user. Preserve existing constraints unless evidence makes them obsolete; call out removals explicitly.
+Feed the normalized rules into `creating-nullshot-specs` as `constraints` and `discoveredContext`. Record direct execution as the default when the user asked the connected coding agent to build and did not request hosted delegation. If a live spec already exists, read its revision and update it only after explaining material changes to the user. Preserve existing constraints unless evidence makes them obsolete; call out removals explicitly.

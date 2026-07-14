@@ -2,19 +2,21 @@
 
 Plan, inspect, and operate [Nullshot](https://nullshot.ai) from your coding agent. The plugin connects to Nullshot's OAuth-protected MCP gateway at `https://mcp.nullshot.ai/mcp`, loads planning skills derived from Spek Kit, and keeps specifications and task DAGs live in a Nullshot Jam.
 
-## Install
+## One-command bootstrap
 
-| Client | Install | Authenticate |
-| --- | --- | --- |
-| Codex | `codex plugin marketplace add null-shot/plugin` then `codex plugin add nullshot@nullshot` | `codex mcp login nullshot` |
-| Claude Code | `claude plugin marketplace add null-shot/plugin` then `claude plugin install nullshot@nullshot` | OAuth starts on first MCP use |
-| Cursor | Run `/add-plugin https://github.com/null-shot/plugin` | OAuth starts on first MCP use |
-| Kimi | Run `/plugins install https://github.com/null-shot/plugin`, then `/reload` | `/mcp-config login nullshot` |
-| Gemini CLI | `gemini extensions install https://github.com/null-shot/plugin` | `/mcp auth nullshot` |
-| OpenCode | `curl -fsSL https://raw.githubusercontent.com/null-shot/plugin/main/scripts/install-opencode.sh \| sh` | `opencode mcp auth nullshot` |
-| Pi | `pi install git:github.com/null-shot/plugin@v0.1.0` | `/mcp-auth nullshot` |
+Paste the command for your client as one line. Clients with terminal OAuth support open the Nullshot login during the command; the others request OAuth when Nullshot is first used.
 
-Restart the client or begin a new conversation after installation so it discovers the new skills and MCP tools.
+| Client | Paste once |
+| --- | --- |
+| Codex terminal | `codex plugin marketplace add null-shot/plugin && codex plugin add nullshot@nullshot && codex mcp login nullshot` |
+| Claude Code terminal | `claude plugin marketplace add null-shot/plugin && claude plugin install nullshot@nullshot && claude mcp login nullshot` |
+| Cursor chat | `/add-plugin https://github.com/null-shot/plugin` |
+| Kimi chat | `/plugins install https://github.com/null-shot/plugin` |
+| Gemini terminal | `gemini extensions install https://github.com/null-shot/plugin --consent` |
+| OpenCode terminal | `curl -fsSL https://raw.githubusercontent.com/null-shot/plugin/main/scripts/install-opencode.sh \| sh` |
+| Pi terminal | `pi install git:github.com/null-shot/plugin@v0.1.0` |
+
+Cursor and Gemini discover OAuth automatically when the MCP server first returns `401 Unauthorized`. Kimi applies the plugin in a new session; if it reports that authorization is required, run `/mcp-config login nullshot`. Pi exposes the equivalent interactive action as `/mcp-auth nullshot`.
 
 ## Workflow
 

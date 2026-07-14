@@ -23,6 +23,17 @@ test("OpenCode adapter supports the managed global install layout", () => {
   const installer = fs.readFileSync(path.resolve("scripts/install-opencode.sh"), "utf8");
   assert.match(installer, /cp "\$plugin_root\/\.opencode\/plugins\/nullshot\.js"/);
   assert.match(installer, /opencode mcp auth nullshot/);
+  assert.match(installer, /NULLSHOT_SKIP_AUTH/);
+});
+
+test("README exposes one pasteable bootstrap command per client", () => {
+  const readme = fs.readFileSync(path.resolve("README.md"), "utf8");
+  for (const client of ["Codex terminal", "Claude Code terminal", "Cursor chat", "Kimi chat", "Gemini terminal", "OpenCode terminal", "Pi terminal"]) {
+    const row = readme.split("\n").find((line) => line.startsWith(`| ${client} |`));
+    assert.ok(row, `missing bootstrap row for ${client}`);
+    assert.equal((row.match(/`/g) ?? []).length, 2, `${client} bootstrap must be one inline command`);
+    assert.ok(!/\bthen\b/i.test(row), `${client} bootstrap must not require a second step`);
+  }
 });
 
 test("Pi adapter preserves config and refuses a conflicting Nullshot URL", () => {

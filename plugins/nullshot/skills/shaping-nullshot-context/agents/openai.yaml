@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shape Nullshot Context"
+  short_description: "Gather durable repository and product constraints"
+  default_prompt: "Use $shaping-nullshot-context to gather constraints for my active Nullshot Jam."

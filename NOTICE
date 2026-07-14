@@ -1,0 +1,21 @@
+Nullshot Plugin
+Copyright (c) 2026 Nullshot
+
+Planning workflow material in `plugins/nullshot/skills` and `plugins/nullshot/commands`
+was adapted from the Nullspek/Spek Kit project by XAVA DAO under the MIT License.
+
+That material includes adaptations of:
+
+- Superpowers, copyright (c) 2025 Jesse Vincent
+  https://github.com/obra/superpowers — MIT License
+- Spec Kit, copyright GitHub, Inc.
+  https://github.com/github/spec-kit — MIT License
+- Nullshot planning material authored by XAVA DAO
+
+The distributed Pi adapter depends on:
+
+- pi-mcp-adapter, copyright Nico Bailon
+  https://github.com/nicobailon/pi-mcp-adapter — MIT License
+
+Only planning, specification, context, and read-only reviewer material is adapted.
+Nullspek's coding disciplines and local Spek visualization server are not included.

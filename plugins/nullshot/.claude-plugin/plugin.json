@@ -1,0 +1,23 @@
+{
+  "name": "nullshot",
+  "description": "Nullshot planning skills and authenticated remote-control MCP tools.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Nullshot"
+  },
+  "homepage": "https://github.com/null-shot/plugin",
+  "repository": "https://github.com/null-shot/plugin",
+  "license": "MIT",
+  "keywords": [
+    "nullshot",
+    "mcp",
+    "planning",
+    "skills"
+  ],
+  "mcpServers": {
+    "nullshot": {
+      "type": "http",
+      "url": "https://mcp.nullshot.ai/mcp"
+    }
+  }
+}

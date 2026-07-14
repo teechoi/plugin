@@ -9,7 +9,7 @@ Paste the command for your client as one line. Clients with terminal OAuth suppo
 | Client | Paste once |
 | --- | --- |
 | Codex terminal | `codex plugin marketplace add null-shot/plugin && codex plugin add nullshot@nullshot && codex mcp login nullshot` |
-| Claude Code terminal | `claude plugin marketplace add null-shot/plugin && claude plugin install nullshot@nullshot && claude mcp login nullshot` |
+| Claude Code terminal | `claude plugin marketplace add null-shot/plugin && claude plugin install nullshot@nullshot && claude mcp login plugin:nullshot:nullshot` |
 | Cursor chat | `/add-plugin https://github.com/null-shot/plugin` |
 | Kimi chat | `/plugins install https://github.com/null-shot/plugin` |
 | Gemini terminal | `gemini extensions install https://github.com/null-shot/plugin --consent` |

@@ -34,6 +34,7 @@ test("README exposes one pasteable bootstrap command per client", () => {
     assert.equal((row.match(/`/g) ?? []).length, 2, `${client} bootstrap must be one inline command`);
     assert.ok(!/\bthen\b/i.test(row), `${client} bootstrap must not require a second step`);
   }
+  assert.match(readme, /claude mcp login plugin:nullshot:nullshot/);
 });
 
 test("Pi adapter preserves config and refuses a conflicting Nullshot URL", () => {

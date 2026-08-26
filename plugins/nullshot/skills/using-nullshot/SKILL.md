@@ -17,7 +17,7 @@ Treat the active Nullshot Jam as the source of truth for intent, plans, tasks, a
 6. To pick up existing work rather than start something new, call `list_spek_projects` and `list_available_work` before selecting a task, then claim it as `operating-nullshot` describes.
 7. Inspect the repository's `AGENTS.md`, README, and governing project documentation before making claims about local constraints.
 
-Never embed or request bearer tokens. Let the client perform OAuth against `https://mcp.nullshot.ai/mcp`.
+Never embed or request bearer tokens. Let the client perform OAuth against the gateway it is configured with — production unless `NULLSHOT_MCP_URL` names another, and the environments do not share accounts, jams or grants.
 
 ## Choose the executor
 

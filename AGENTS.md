@@ -2,7 +2,7 @@
 
 `plugins/nullshot/` is the canonical plugin bundle. Root client manifests must reference that directory instead of duplicating skills.
 
-- Keep every MCP adapter pointed at `https://mcp.nullshot.ai/mcp`.
+- Keep every MCP adapter resolving the gateway through `NULLSHOT_MCP_URL`, defaulting to `https://mcp.nullshot.ai/mcp`. Do not reintroduce a bare literal: Nullshot runs separate production, test, preview and local gateways, and a hardcoded URL points a write-scoped agent at production while the user believes they are elsewhere. `scripts/validate.mjs` enforces the form.
 - Never commit bearer tokens, OAuth codes, client secrets, `.env`, or generated auth stores.
 - Keep planning and context skills; do not add coding-discipline skills from Spek or Superpowers.
 - Treat Nullshot Jam as the canonical specification and plan store.

@@ -13,7 +13,9 @@ Treat the active Nullshot Jam as the source of truth for intent, plans, tasks, a
 2. Call `get_active_jam_context`. If the user requested a new app or Jam, call `create_jam_room` with no prompt and `initialState: "planning"`; it selects the new Jam automatically. Otherwise, if no Jam is active, call `list_accessible_jams`, ask which plausible Jam to use, then call `set_active_jam_context`.
 3. Call `get_jam_overview` and `list_jam_rooms`. Select a room explicitly before writing a specification or plan.
 4. Call `list_skills` with a query matching the work. Load relevant remote instructions with `read_skill` and, when needed, `read_skill_reference`.
-5. Inspect the repository's `AGENTS.md`, README, and governing project documentation before making claims about local constraints.
+5. Call `list_workspace_inbox` when you resume, and after any long-running work. This gateway cannot push notifications, so nothing that happened while you were away reaches you unless you read it.
+6. To pick up existing work rather than start something new, call `list_spek_projects` and `list_available_work` before selecting a task, then claim it as `operating-nullshot` describes.
+7. Inspect the repository's `AGENTS.md`, README, and governing project documentation before making claims about local constraints.
 
 Never embed or request bearer tokens. Let the client perform OAuth against `https://mcp.nullshot.ai/mcp`.
 
@@ -28,7 +30,7 @@ Preserve the authorization in the user's original request through specification 
 
 Before either execution path, call `get_room_session_status`. Do not edit directly while a hosted session is active unless the user explicitly coordinates that overlap.
 
-During direct execution, keep Nullshot's Spek visualization synchronized through the plan task todos. Mark a task `in_progress` before its app edits and `completed` only after its verification passes.
+During direct execution, take each Spek task through the atomic claim lifecycle in `operating-nullshot`: `start_jam_task`, `heartbeat_jam_task` while the work runs, then one `complete_jam_task` carrying verification evidence. Do not mark Spek task state with `update_jam_todo` — it bypasses claim ownership, and two clients on the same grant will build the same task.
 
 ## Route the request
 

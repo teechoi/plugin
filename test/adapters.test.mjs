@@ -81,6 +81,39 @@ test("README exposes one pasteable bootstrap command per client", () => {
   assert.match(readme, /Spek visualization stays current/);
 });
 
+test("skills drive Spek tasks through atomic claims, not todo writes", () => {
+  // The previous guidance told agents to mark task state with `update_jam_todo`,
+  // which the gateway forbids: it bypasses claim ownership, and two clients on
+  // one grant read the same plan, pick the same task, and overwrite each other.
+  const readSkill = (name) => fs.readFileSync(path.resolve(`plugins/nullshot/skills/${name}/SKILL.md`), "utf8");
+  const using = readSkill("using-nullshot");
+  const operating = readSkill("operating-nullshot");
+
+  // The whole lease lifecycle has to be present, not just the claim call: a
+  // claim that is never heartbeated expires and the task is silently reclaimed.
+  for (const tool of [
+    "list_available_work",
+    "start_jam_task",
+    "heartbeat_jam_task",
+    "complete_jam_task",
+    "release_jam_task",
+  ]) {
+    assert.ok(operating.includes(tool), `operating-nullshot must document ${tool}`);
+  }
+  assert.match(operating, /Never call `update_jam_todo` to mark a Spek task/);
+  assert.match(operating, /verificationEvidence/);
+  assert.match(operating, /workspace inbox/);
+
+  // The entry skill must not still teach the old path.
+  assert.match(using, /start_jam_task/);
+  assert.match(using, /bypasses claim ownership/);
+  assert.ok(
+    !/Mark a task `in_progress` before its app edits/.test(using),
+    "using-nullshot still teaches the todo-write path",
+  );
+  assert.match(using, /list_workspace_inbox/);
+});
+
 test("skills prefer direct execution without removing hosted delegation", () => {
   const readSkill = (name) => fs.readFileSync(path.resolve(`plugins/nullshot/skills/${name}/SKILL.md`), "utf8");
   const using = readSkill("using-nullshot");
@@ -99,7 +132,7 @@ test("skills prefer direct execution without removing hosted delegation", () => 
   assert.match(plans, /For planning-only requests, leave the room in planning and stop/);
   assert.match(operating, /Direct — default/);
   assert.match(operating, /Do not call `send_jam_prompt`/);
-  assert.match(operating, /plan task's `todoId` with `update_jam_todo`/);
+  assert.match(operating, /Drive each plan task through the claim lifecycle below, never through `update_jam_todo`/);
   assert.match(operating, /Spek visualization stays accurate/);
   assert.match(operating, /Hosted — deliberate delegation/);
   assert.match(operating, /never fall back silently/);

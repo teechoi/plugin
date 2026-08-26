@@ -34,10 +34,16 @@ pointed at the wrong one reads and writes the wrong environment's data while
 appearing to work normally. Production stays the default, so an existing
 install is unaffected by this.
 
-Claude Code and Codex read the variable through `.mcp.json`, where `${VAR:-default}`
+Claude Code reads it through its plugin manifest, where `${VAR:-default}`
 expansion is supported for an HTTP server's `url`. The OpenCode and Pi adapters
-resolve it in code. Cursor, Kimi and Gemini read a static manifest, so those
-three are production-only until their manifests gain expansion of their own.
+resolve it in code.
+
+Codex, Cursor, Kimi and Gemini are **production-only**. Codex reads
+`plugins/nullshot/.mcp.json` and does not expand `${VAR}` in MCP configuration
+(`openai/codex#2680` and `#7521` are open requests for it), so that file stays a
+plain URL on purpose: an unexpanded `${...}` there would register a broken
+server, which is worse than one that cannot change environment. The Cursor,
+Kimi and Gemini manifests have no expansion support I could verify either.
 
 ## Workflow
 

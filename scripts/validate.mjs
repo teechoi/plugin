@@ -62,9 +62,13 @@ assert.equal(
 
 const canonicalMcp = fs.readFileSync(path.join(root, "plugins/nullshot/.mcp.json"), "utf8");
 assert.ok(canonicalMcp.includes(canonicalUrl));
-// Claude Code and Codex read these through `.mcp.json`, where `${VAR:-default}`
-// expansion is supported in an http server's `url`.
-for (const relative of [".mcp.json", "plugins/nullshot/.mcp.json", "plugins/nullshot/.claude-plugin/plugin.json"]) {
+// Only where expansion is verified. Claude Code documents `${VAR:-default}` in
+// an http server's `url`, and this manifest is what `claude plugin install`
+// registers the server from. Codex reads `plugins/nullshot/.mcp.json` and does
+// NOT expand (openai/codex#2680 and #7521 are open feature requests), so that
+// file and its root twin stay literal — an unexpanded URL there would be a
+// broken server, which is worse than one that cannot change environment.
+for (const relative of ["plugins/nullshot/.claude-plugin/plugin.json"]) {
   assert.ok(
     fs.readFileSync(path.join(root, relative), "utf8").includes(overridableUrl),
     `${relative} must express the gateway as ${overridableUrl}`,

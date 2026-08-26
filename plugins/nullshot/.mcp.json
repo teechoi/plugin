@@ -2,7 +2,7 @@
   "mcpServers": {
     "nullshot": {
       "type": "http",
-      "url": "${NULLSHOT_MCP_URL:-https://mcp.nullshot.ai/mcp}"
+      "url": "https://mcp.nullshot.ai/mcp"
     }
   }
 }

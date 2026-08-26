@@ -41,15 +41,17 @@ test("manifests express the gateway as an overridable value, not a bare literal"
   // The canonical-URL check elsewhere is satisfied by the default alone, so
   // this is what actually keeps the override from being edited away.
   const overridable = "${NULLSHOT_MCP_URL:-https://mcp.nullshot.ai/mcp}";
-  for (const relative of [
-    ".mcp.json",
-    "plugins/nullshot/.mcp.json",
-    "plugins/nullshot/.claude-plugin/plugin.json",
-  ]) {
-    assert.ok(
-      fs.readFileSync(path.resolve(relative), "utf8").includes(overridable),
-      `${relative} must express the gateway as ${overridable}`,
-    );
+  assert.ok(
+    fs.readFileSync(path.resolve("plugins/nullshot/.claude-plugin/plugin.json"), "utf8").includes(overridable),
+    `the Claude plugin manifest must express the gateway as ${overridable}`,
+  );
+  // Codex reads these and does not expand `${VAR}` (openai/codex#2680, #7521),
+  // so an override here would register a literally-unexpanded URL — a broken
+  // server rather than a movable one. They must stay plain.
+  for (const relative of [".mcp.json", "plugins/nullshot/.mcp.json"]) {
+    const source = fs.readFileSync(path.resolve(relative), "utf8");
+    assert.ok(!source.includes("${"), `${relative} must not rely on expansion Codex does not support`);
+    assert.ok(source.includes("https://mcp.nullshot.ai/mcp"), `${relative} must name the gateway literally`);
   }
   for (const relative of [".opencode/plugins/nullshot.js", ".pi/extensions/nullshot.ts"]) {
     assert.match(fs.readFileSync(path.resolve(relative), "utf8"), /NULLSHOT_MCP_URL/);

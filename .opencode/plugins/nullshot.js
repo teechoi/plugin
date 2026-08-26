@@ -9,6 +9,17 @@ const pluginRoot = fs.existsSync(path.join(projectRoot, "plugins/nullshot/skills
   ? projectRoot
   : managedRoot;
 const skillsDir = path.join(pluginRoot, "plugins/nullshot/skills");
+
+/**
+ * The gateway this plugin talks to.
+ *
+ * `NULLSHOT_MCP_URL` overrides it; production is the default, so an existing
+ * install is unaffected. Nullshot runs more than one environment — production,
+ * test, preview and local all serve a different gateway — and a hardcoded URL
+ * meant anyone working against a non-production environment pointed a
+ * write-scoped agent at production data while believing otherwise.
+ */
+const mcpUrl = process.env.NULLSHOT_MCP_URL || "https://mcp.nullshot.ai/mcp";
 let bootstrap;
 
 function readBootstrap() {
@@ -26,7 +37,7 @@ export const NullshotPlugin = async () => ({
     config.mcp ??= {};
     config.mcp.nullshot = {
       type: "remote",
-      url: "https://mcp.nullshot.ai/mcp",
+      url: mcpUrl,
       enabled: true,
     };
   },

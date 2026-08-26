@@ -4,8 +4,19 @@ import os from "node:os";
 import path from "node:path";
 import mcpAdapter from "pi-mcp-adapter";
 
+/**
+ * The gateway this plugin talks to.
+ *
+ * `NULLSHOT_MCP_URL` overrides it; production is the default, so an existing
+ * install is unaffected. Nullshot runs more than one environment — production,
+ * test, preview and local all serve a different gateway — and a hardcoded URL
+ * meant anyone working against a non-production environment pointed a
+ * write-scoped agent at production data while believing otherwise.
+ */
+const NULLSHOT_URL = process.env.NULLSHOT_MCP_URL || "https://mcp.nullshot.ai/mcp";
+
 const NULLSHOT_SERVER = {
-  url: "https://mcp.nullshot.ai/mcp",
+  url: NULLSHOT_URL,
   auth: "oauth",
   oauth: {
     clientName: "Nullshot Plugin for Pi",

@@ -5,6 +5,12 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const canonicalUrl = "https://mcp.nullshot.ai/mcp";
+// Every embedded URL must stay overridable, with production as the default.
+// The substring check below is satisfied by the default alone, so without this
+// form check a future edit could drop the override and still validate green —
+// and non-production users would silently be pointed at production again.
+const overridableUrl = `\${NULLSHOT_MCP_URL:-${canonicalUrl}}`;
+const envVarName = "NULLSHOT_MCP_URL";
 const requiredFiles = [
   ".agents/plugins/marketplace.json",
   ".claude-plugin/marketplace.json",
@@ -56,6 +62,25 @@ assert.equal(
 
 const canonicalMcp = fs.readFileSync(path.join(root, "plugins/nullshot/.mcp.json"), "utf8");
 assert.ok(canonicalMcp.includes(canonicalUrl));
+// Only where expansion is verified. Claude Code documents `${VAR:-default}` in
+// an http server's `url`, and this manifest is what `claude plugin install`
+// registers the server from. Codex reads `plugins/nullshot/.mcp.json` and does
+// NOT expand (openai/codex#2680 and #7521 are open feature requests), so that
+// file and its root twin stay literal — an unexpanded URL there would be a
+// broken server, which is worse than one that cannot change environment.
+for (const relative of ["plugins/nullshot/.claude-plugin/plugin.json"]) {
+  assert.ok(
+    fs.readFileSync(path.join(root, relative), "utf8").includes(overridableUrl),
+    `${relative} must express the gateway as ${overridableUrl}`,
+  );
+}
+// The two adapters that are real code resolve the same variable themselves.
+for (const relative of [".opencode/plugins/nullshot.js", ".pi/extensions/nullshot.ts"]) {
+  assert.ok(
+    fs.readFileSync(path.join(root, relative), "utf8").includes(envVarName),
+    `${relative} must honour ${envVarName}`,
+  );
+}
 assert.equal(
   fs.readFileSync(path.join(root, ".mcp.json"), "utf8"),
   canonicalMcp,

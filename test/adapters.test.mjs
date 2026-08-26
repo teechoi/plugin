@@ -17,6 +17,47 @@ test("OpenCode adapter registers canonical skills and OAuth MCP", async () => {
   });
 });
 
+test("OpenCode adapter points at the gateway named by NULLSHOT_MCP_URL", async () => {
+  // Nullshot runs production, test, preview and local gateways. A hardcoded URL
+  // meant anyone on a non-production environment pointed a write-scoped agent
+  // at production data while believing otherwise.
+  const previous = process.env.NULLSHOT_MCP_URL;
+  process.env.NULLSHOT_MCP_URL = "https://mcp-gateway-test.example.workers.dev/mcp";
+  try {
+    // The module caches its resolved URL at import time, so re-import fresh.
+    const { NullshotPlugin: Fresh } = await import(
+      `../.opencode/plugins/nullshot.js?override=${Date.now()}`
+    );
+    const config = {};
+    await (await Fresh({})).config(config);
+    assert.equal(config.mcp.nullshot.url, "https://mcp-gateway-test.example.workers.dev/mcp");
+  } finally {
+    if (previous === undefined) delete process.env.NULLSHOT_MCP_URL;
+    else process.env.NULLSHOT_MCP_URL = previous;
+  }
+});
+
+test("manifests express the gateway as an overridable value, not a bare literal", () => {
+  // The canonical-URL check elsewhere is satisfied by the default alone, so
+  // this is what actually keeps the override from being edited away.
+  const overridable = "${NULLSHOT_MCP_URL:-https://mcp.nullshot.ai/mcp}";
+  assert.ok(
+    fs.readFileSync(path.resolve("plugins/nullshot/.claude-plugin/plugin.json"), "utf8").includes(overridable),
+    `the Claude plugin manifest must express the gateway as ${overridable}`,
+  );
+  // Codex reads these and does not expand `${VAR}` (openai/codex#2680, #7521),
+  // so an override here would register a literally-unexpanded URL — a broken
+  // server rather than a movable one. They must stay plain.
+  for (const relative of [".mcp.json", "plugins/nullshot/.mcp.json"]) {
+    const source = fs.readFileSync(path.resolve(relative), "utf8");
+    assert.ok(!source.includes("${"), `${relative} must not rely on expansion Codex does not support`);
+    assert.ok(source.includes("https://mcp.nullshot.ai/mcp"), `${relative} must name the gateway literally`);
+  }
+  for (const relative of [".opencode/plugins/nullshot.js", ".pi/extensions/nullshot.ts"]) {
+    assert.match(fs.readFileSync(path.resolve(relative), "utf8"), /NULLSHOT_MCP_URL/);
+  }
+});
+
 test("OpenCode adapter supports the managed global install layout", () => {
   const adapter = fs.readFileSync(path.resolve(".opencode/plugins/nullshot.js"), "utf8");
   assert.match(adapter, /nullshot-plugin/);

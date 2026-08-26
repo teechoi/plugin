@@ -18,6 +18,33 @@ Paste the command for your client as one line. Clients with terminal OAuth suppo
 
 Cursor and Gemini discover OAuth automatically when the MCP server first returns `401 Unauthorized`. Kimi applies the plugin in a new session; if it reports that authorization is required, run `/mcp-config login plugin-nullshot:nullshot`. Pi exposes the equivalent interactive action as `/mcp-auth nullshot`.
 
+## Choosing an environment
+
+The plugin talks to production, `https://mcp.nullshot.ai/mcp`, unless
+`NULLSHOT_MCP_URL` says otherwise:
+
+```bash
+export NULLSHOT_MCP_URL="https://mcp-gateway-test.devaccounts-1password.workers.dev/mcp"
+```
+
+Set it before the bootstrap command, and keep it set for the sessions that
+should use that gateway. Nullshot runs separate production, test, preview and
+local gateways, and each has its own accounts, jams and grants — so an agent
+pointed at the wrong one reads and writes the wrong environment's data while
+appearing to work normally. Production stays the default, so an existing
+install is unaffected by this.
+
+Claude Code reads it through its plugin manifest, where `${VAR:-default}`
+expansion is supported for an HTTP server's `url`. The OpenCode and Pi adapters
+resolve it in code.
+
+Codex, Cursor, Kimi and Gemini are **production-only**. Codex reads
+`plugins/nullshot/.mcp.json` and does not expand `${VAR}` in MCP configuration
+(`openai/codex#2680` and `#7521` are open requests for it), so that file stays a
+plain URL on purpose: an unexpanded `${...}` there would register a broken
+server, which is worse than one that cannot change environment. The Cursor,
+Kimi and Gemini manifests have no expansion support I could verify either.
+
 ## Workflow
 
 1. Authenticate and select a Jam with `set_active_jam_context`.
